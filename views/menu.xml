@@ -1,0 +1,42 @@
+<odoo>
+
+    <menuitem id="menu_hikvision_root"
+              name="Hikvision Attendance"
+              sequence="10"/>
+
+    <menuitem id="menu_hikvision_attendance"
+              parent="menu_hikvision_root"
+              name="Attendance Records"
+              action="action_hikvision_attendance"
+              sequence="1"/>
+
+    <menuitem id="menu_hikvision_employee_profile"
+              parent="menu_hikvision_root"
+              name="Employee Profiles"
+              action="action_hikvision_employee_profile"
+              sequence="2"/>
+
+    <menuitem id="menu_hikvision_user_list"
+              parent="menu_hikvision_root"
+              name="User List"
+              action="action_hikvision_user_list"
+              sequence="3"/>
+
+    <menuitem id="menu_hikvision_configuration"
+              parent="menu_hikvision_root"
+              name="Configuration"
+              sequence="100"/>
+
+    <menuitem id="menu_hikvision_device"
+              parent="menu_hikvision_configuration"
+              name="Devices"
+              action="action_hikvision_device"
+              sequence="1"/>
+
+    <menuitem id="menu_hikvision_work_policy"
+              parent="menu_hikvision_configuration"
+              name="Work Policies"
+              action="action_hikvision_work_policy"
+              sequence="2"/>
+
+</odoo>

@@ -1,0 +1,143 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<odoo>
+    <!-- Tree View - Employee Profiles -->
+    <record id="view_hikvision_employee_profile_tree" model="ir.ui.view">
+        <field name="name">hikvision.employee.profile.tree</field>
+        <field name="model">hikvision.employee.profile</field>
+        <field name="arch" type="xml">
+            <tree string="Employee Profiles">
+                <field name="employee_name"/>
+                <field name="department_id"/>
+                <field name="job_id"/>
+                <field name="today_hours" widget="float_time" string="Today"/>
+                <field name="week_hours" widget="float_time" string="Week"/>
+                <field name="month_hours" widget="float_time" string="Month"/>
+                <field name="present_days" string="Present"/>
+                <field name="late_days" string="Late"/>
+                <field name="early_leave_days" string="Early"/>
+                <field name="absent_days" string="Absent"/>
+                <field name="avg_daily_hours" widget="float_time" string="Avg/Day"/>
+            </tree>
+        </field>
+    </record>
+
+    <!-- Form View - Employee Profile Detail -->
+    <record id="view_hikvision_employee_profile_form" model="ir.ui.view">
+        <field name="name">hikvision.employee.profile.form</field>
+        <field name="model">hikvision.employee.profile</field>
+        <field name="arch" type="xml">
+            <form string="Employee Attendance Profile" create="false" edit="false">
+                <sheet>
+                    <div class="oe_button_box" name="button_box">
+                        <button name="action_view_attendance" type="object" class="oe_stat_button" icon="fa-calendar">
+                            <span>All Records</span>
+                        </button>
+                        <button name="action_view_late_history" type="object" class="oe_stat_button" icon="fa-clock-o">
+                            <field name="total_late_history" widget="statinfo" string="Late History"/>
+                        </button>
+                        <button name="action_view_early_leave_history" type="object" class="oe_stat_button" icon="fa-sign-out">
+                            <field name="total_early_leave_history" widget="statinfo" string="Early Leave"/>
+                        </button>
+                        <button name="action_view_absent_history" type="object" class="oe_stat_button" icon="fa-times-circle">
+                            <field name="total_absent_history" widget="statinfo" string="Absences"/>
+                        </button>
+                    </div>
+                    
+                    <div class="oe_title">
+                        <h1>
+                            <field name="employee_name" readonly="1"/>
+                        </h1>
+                    </div>
+                    
+                    <group>
+                        <group string="Employee Info">
+                            <field name="department_id" readonly="1"/>
+                            <field name="job_id" readonly="1"/>
+                        </group>
+                        <group string="Average Performance">
+                            <field name="avg_daily_hours" widget="float_time" string="Avg Daily Hours"/>
+                        </group>
+                    </group>
+                    
+                    <group string="Work Hours - Current Period">
+                        <group>
+                            <label for="today_hours" string="Today"/>
+                            <div class="o_row">
+                                <field name="today_hours" widget="float_time" class="oe_inline"/>
+                                <span class="text-muted"> hours</span>
+                            </div>
+                            
+                            <label for="week_hours" string="This Week"/>
+                            <div class="o_row">
+                                <field name="week_hours" widget="float_time" class="oe_inline"/>
+                                <span class="text-muted"> hours</span>
+                            </div>
+                            
+                            <label for="month_hours" string="This Month"/>
+                            <div class="o_row">
+                                <field name="month_hours" widget="float_time" class="oe_inline"/>
+                                <span class="text-muted"> hours</span>
+                            </div>
+                        </group>
+                        <group>
+                            <label for="last_week_hours" string="Last Week"/>
+                            <div class="o_row">
+                                <field name="last_week_hours" widget="float_time" class="oe_inline"/>
+                                <span class="text-muted"> hours</span>
+                            </div>
+                            
+                            <label for="last_month_hours" string="Last Month"/>
+                            <div class="o_row">
+                                <field name="last_month_hours" widget="float_time" class="oe_inline"/>
+                                <span class="text-muted"> hours</span>
+                            </div>
+                        </group>
+                    </group>
+                    
+                    <group string="This Month's Attendance">
+                        <group>
+                            <field name="present_days" string="Present Days"/>
+                            <field name="incomplete_days" string="Incomplete Days"/>
+                        </group>
+                        <group>
+                            <field name="absent_days" string="Absent Days"/>
+                            <field name="late_days" string="Late Arrivals"/>
+                            <field name="early_leave_days" string="Early Leaves"/>
+                        </group>
+                    </group>
+                </sheet>
+            </form>
+        </field>
+    </record>
+
+    <!-- Search View -->
+    <record id="view_hikvision_employee_profile_search" model="ir.ui.view">
+        <field name="name">hikvision.employee.profile.search</field>
+        <field name="model">hikvision.employee.profile</field>
+        <field name="arch" type="xml">
+            <search string="Employee Profiles">
+                <field name="employee_name"/>
+                <field name="department_id"/>
+                <field name="job_id"/>
+                <separator/>
+                <filter string="Late This Month" name="late" domain="[('late_days', '>', 0)]"/>
+                <filter string="Has Early Leave" name="early" domain="[('early_leave_days', '>', 0)]"/>
+                <filter string="Has Incomplete" name="incomplete" domain="[('incomplete_days', '>', 0)]"/>
+                <filter string="Has Absences" name="absent" domain="[('absent_days', '>', 0)]"/>
+                <filter string="Perfect Attendance" name="perfect" domain="[('absent_days', '=', 0), ('late_days', '=', 0), ('early_leave_days', '=', 0)]"/>
+                <separator/>
+                <group expand="0" string="Group By">
+                    <filter string="Department" name="group_dept" context="{'group_by': 'department_id'}"/>
+                </group>
+            </search>
+        </field>
+    </record>
+
+    <!-- Action -->
+    <record id="action_hikvision_employee_profile" model="ir.actions.act_window">
+        <field name="name">Employee Profiles</field>
+        <field name="res_model">hikvision.employee.profile</field>
+        <field name="view_mode">tree,form</field>
+        <field name="search_view_id" ref="view_hikvision_employee_profile_search"/>
+    </record>
+</odoo>

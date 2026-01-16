@@ -1,0 +1,30 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<odoo>
+
+    <!-- Attendance Records Action -->
+    <record id="action_hikvision_attendance" model="ir.actions.act_window">
+        <field name="name">Attendance Records</field>
+        <field name="res_model">hikvision.attendance</field>
+        <field name="view_mode">tree,form</field>
+        <field name="help" type="html">
+            <p class="o_view_nocontent_smiling_face">
+                Manage your Hikvision attendance records here.
+            </p>
+        </field>
+    </record>
+
+
+
+    <!-- User List Action -->
+    <record id="action_hikvision_user_list" model="ir.actions.act_window">
+        <field name="name">Hikvision Users</field>
+        <field name="res_model">hikvision.user</field>
+        <field name="view_mode">tree,form</field>
+        <field name="help" type="html">
+            <p class="o_view_nocontent_smiling_face">
+                No users found. Sync from device.
+            </p>
+        </field>
+    </record>
+
+</odoo>
