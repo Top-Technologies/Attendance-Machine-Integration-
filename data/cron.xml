@@ -1,0 +1,13 @@
+<odoo>
+    <record id="cron_hikvision_fetcher" model="ir.cron">
+        <field name="name">Hikvision Attendance Fetcher</field>
+        <field name="model_id" ref="model_hikvision_service"/>
+        <field name="state">code</field>
+        <field name="code">model.action_cron_fetch_all()</field>
+        <field name="interval_number">15</field>
+        <field name="interval_type">minutes</field>
+
+        <field name="active">True</field>
+
+    </record>
+</odoo>
